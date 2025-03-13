@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification du site</title>
+    <script>
+        async function checkSite() {
+            const urls = [
+                "https://main.jcc74.com",
+                "https://mirror.jcc74.com"
+            ];
+            
+            for (let url of urls) {
+                try {
+                    const response = await fetch(url, { mode: 'no-cors' });
+                    if (response) {
+                        window.location.href = url;
+                        return;
+                    }
+                } catch (error) {
+                    console.log(`Échec de connexion à ${url}`);
+                }
+            }
+            
+            document.getElementById("message").innerHTML = 
+                "Désolé, ni le site web ni ses miroirs ne sont disponibles. " +
+                "Une panne majeure est en cours. Veuillez réessayer plus tard ou " +
+                "essayer la <a href='https://web.archive.org/web/*/https://jcc74.com' target='_blank'>Wayback Machine</a>.";
+        }
+        
+        window.onload = checkSite;
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vérification du site...</h1>
+    <p id="message">Patientez pendant que nous vérifions la disponibilité du site.</p>
+</body>
+</html>
